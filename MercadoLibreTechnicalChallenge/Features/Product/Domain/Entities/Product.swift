@@ -14,5 +14,5 @@ struct Product: Identifiable, Hashable {
     let description: String
     let ratingAverage: Double
     let productFeatures: [String : String]
-    
+    let Images: [String]
 }
