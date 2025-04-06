@@ -8,13 +8,13 @@
 import Foundation
 
 struct ProductListItem: Identifiable, Hashable {
-    let id: UUID
+    let id: String
     let name: String
     let ratingAverage: Double
     let price: Double
     let image: String
     
-    init(id: UUID,
+    init(id: String,
          name: String,
          ratingAverage: Double,
          price: Double,
