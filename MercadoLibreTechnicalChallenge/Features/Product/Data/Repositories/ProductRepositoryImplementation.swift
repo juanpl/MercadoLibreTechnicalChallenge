@@ -11,7 +11,7 @@ class ProductRepositoryImplementation: ProductRepository {
     
     var mercadoLibreRemoteDataSource: MercadoLibreRemoteDataSource
     
-    init(mercadoLibreRemoteDataSource: MercadoLibreRemoteDataSource) {
+    init(mercadoLibreRemoteDataSource: MercadoLibreRemoteDataSource = MercadoLibreRemoteDataSource()) {
         self.mercadoLibreRemoteDataSource = mercadoLibreRemoteDataSource
     }
     

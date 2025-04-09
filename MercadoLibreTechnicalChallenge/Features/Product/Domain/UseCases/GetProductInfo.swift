@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetProductInfo {
+struct GetProductInfoUseCase {
     
     private let repository: ProductRepository
     
