@@ -10,9 +10,25 @@ import Foundation
 struct Product: Identifiable, Hashable {
     let id: String
     let title: String
-    let price: Double
     let description: String
-    let ratingAverage: Double
-    let productFeatures: [String : String]
-    let Images: [String]
+    let productFeatures: [String]
+    let productAttributes: [String : String]
+    let images: [String]
+    let price: Double?
+
+    init(id: String,
+         title: String,
+         description: String,
+         productFeatures: [String],
+         productAttributes: [String : String],
+         images: [String],
+         price: Double?) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.productFeatures = productFeatures
+        self.productAttributes = productAttributes
+        self.images = images
+        self.price = price
+    }
 }
