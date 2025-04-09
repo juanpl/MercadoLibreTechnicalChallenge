@@ -14,8 +14,8 @@ enum MercadoLibreRemoteDataSourceError: Error {
 }
 
 protocol MercadoLibreRemoteDataSourceProtocol {
-    func getProductList(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError>
-    func getProductInfo(id: String) async -> Result<Product, MercadoLibreRemoteDataSourceError>
+    func fetchProductListFromAPI(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError>
+    func fetchProductInfoFromAPI(id: String) async -> Result<Product, MercadoLibreRemoteDataSourceError>
 }
 
 class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
@@ -36,7 +36,7 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
     }
     
     
-    func getProductList(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError> {
+    func fetchProductListFromAPI(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError> {
         let urlString = "\(mercadiLibreURL)/products/search?status=active&site_id=MLC&q=\(query)&offset=\(offset)&limit=\(limit)"
         
         //codifica caracteres extraños
@@ -66,7 +66,7 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
         }
     }
     
-    func getProductInfo(id: String) async -> Result<Product, MercadoLibreRemoteDataSourceError> {
+    func fetchProductInfoFromAPI(id: String) async -> Result<Product, MercadoLibreRemoteDataSourceError> {
         let urlString = "\(mercadiLibreURL)/products/\(id)"
         
         guard let url = URL(string: urlString) else {
