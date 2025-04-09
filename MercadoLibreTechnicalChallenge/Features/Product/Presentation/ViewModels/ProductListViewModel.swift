@@ -6,18 +6,25 @@
 //
 
 import Foundation
+import Observation
 
+@Observable
 class ProductListViewModel {
     
-    var searchInputText: String = ""
-    var products: [ProductListItem] = []
-    var pagingCounter: Int = 0
-    var errorMessage = ""
-    var ShowErrorMessage: Bool = false
+    
     
     private let getProductListUseCase: GetProductListUseCase
+    private var products: [ProductListItem]
     
-    init(getProductListUseCase: GetProductListImp = GetProductListImp()) {
+    private var pagingCounter: Int = 0
+    private var errorMessage:String = ""
+    private var ShowErrorMessage: Bool = false
+    private var searchInputText: String = ""
+    
+    
+    
+    init(products: [ProductListItem] = [], getProductListUseCase: GetProductListImp = GetProductListImp()) {
+        self.products = products
         self.getProductListUseCase = getProductListUseCase
     }
     
@@ -33,7 +40,7 @@ class ProductListViewModel {
             
             
         case .failure(let error):
-            print("Error al obtener productos: \(error)")
+            print("Error al obtener lista productos: \(error)")
             errorMessage = "Error cargando los productos"
             ShowErrorMessage = true
         }
