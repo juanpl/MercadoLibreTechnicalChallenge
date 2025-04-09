@@ -11,7 +11,7 @@ class GetProductListImp: GetProductListUseCase {
     
     var mercadoLibreRemoteDataSource: MercadoLibreRemoteDataSource
     
-    init(mercadoLibreRemoteDataSource: MercadoLibreRemoteDataSource) {
+    init(mercadoLibreRemoteDataSource: MercadoLibreRemoteDataSource = MercadoLibreRemoteDataSource()) {
         self.mercadoLibreRemoteDataSource = mercadoLibreRemoteDataSource
     }
     

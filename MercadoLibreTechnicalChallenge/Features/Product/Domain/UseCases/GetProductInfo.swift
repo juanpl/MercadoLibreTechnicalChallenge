@@ -11,7 +11,6 @@ enum GetProductInfoError: Error {
     case getProductInfoFailed
 }
 
-
 protocol GetProductInfoUseCase {
     func getProductInfo(id: String) async -> Result<Product, GetProductInfoError>
 }

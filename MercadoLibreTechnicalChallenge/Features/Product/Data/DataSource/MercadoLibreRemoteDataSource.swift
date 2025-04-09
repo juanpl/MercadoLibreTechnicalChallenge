@@ -23,20 +23,24 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
     
     //TODO: El site_id debe cambiar dependiendo de la ubicacion en la que este el usuario
     private let mercadiLibreURL: String
-    private let session: URLSession
     private let accesToken: String
+    private let session: URLSession
     
-    init(session: URLSession,
+    init(
          mercadiLibreURL: String = "https://api.mercadolibre.com",
-         accesToken: String = "APP_USR-8880650627470842-040817-bd0f7371bf964aaca5527805193521d9-556123717"
+         accesToken: String = "APP_USR-8880650627470842-040817-bd0f7371bf964aaca5527805193521d9-556123717",
+         session: URLSession = .shared
     ) {
         self.mercadiLibreURL = mercadiLibreURL
-        self.session = session
         self.accesToken = accesToken
+        self.session = session
     }
     
     
+    
+    
     func fetchProductListFromAPI(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError> {
+
         let urlString = "\(mercadiLibreURL)/products/search?status=active&site_id=MLC&q=\(query)&offset=\(offset)&limit=\(limit)"
         
         //codifica caracteres extraños
