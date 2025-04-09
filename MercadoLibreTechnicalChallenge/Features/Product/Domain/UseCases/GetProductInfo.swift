@@ -7,16 +7,10 @@
 
 import Foundation
 
-struct GetProductInfoUseCase {
-    
-    private let repository: ProductRepository
-    
-    init(repository: ProductRepository) {
-        self.repository = repository
-    }
-    
-    func execute(id: String) async -> Result<Product, RepositoryError>  {
-        return await repository.getProductInfo(id: id)
-    }
-    
+enum GetProductInfoError: Error {
+    case getProductInfoFailed
+}
+
+protocol GetProductInfoUseCase {
+    func getProductInfo(id: String) async -> Result<Product, GetProductInfoError>
 }
