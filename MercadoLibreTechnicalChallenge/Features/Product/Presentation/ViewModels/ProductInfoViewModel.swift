@@ -9,27 +9,29 @@ import Foundation
 
 class ProductInfoViewModel {
     
-    private let getProductInfo: GetProductInfoUseCase
+    private let getProductInfoUseCase: GetProductInfoUseCase
     
     var product: Product?
     var showErrorMessage: Bool = false
     var errorMessage: String = ""
     
     
-    init(getProductInfo: GetProductInfoUseCase = GetProductInfoImp(),
+    init(getProductInfoUseCase: GetProductInfoUseCase = GetProductInfoImp(),
          product: Product? = nil) {
-        self.getProductInfo = getProductInfo
+        self.getProductInfoUseCase = getProductInfoUseCase
         self.product = product
     }
     
     func loadProductInfo(id: String) async {
-        let result = await getProductInfo.getProductInfo(id: id)
+        let result = await getProductInfoUseCase.getProductInfo(id: id)
         
         switch result {
         case .success(let product):
             self.product = product
         case .failure(let error):
             print("Error al obtener productos: \(error)")
+            showErrorMessage = true
+            errorMessage = "Error cargando el producto"
         }
     }
     
