@@ -14,7 +14,7 @@ enum MercadoLibreRemoteDataSourceError: Error {
 }
 
 protocol MercadoLibreRemoteDataSourceProtocol {
-    func fetchProductListFromAPI(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError>
+    func fetchProductListFromAPI(query: String, site: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError>
     func fetchProductInfoFromAPI(id: String) async -> Result<Product, MercadoLibreRemoteDataSourceError>
 }
 
@@ -28,7 +28,7 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
     
     init(
          mercadiLibreURL: String = "https://api.mercadolibre.com",
-         accesToken: String = "APP_USR-8880650627470842-040817-bd0f7371bf964aaca5527805193521d9-556123717",
+         accesToken: String = "APP_USR-8880650627470842-041015-4d47cf5cc50dc219d9a9f92baa2a5534-556123717",
          session: URLSession = .shared
     ) {
         self.mercadiLibreURL = mercadiLibreURL
@@ -39,9 +39,9 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
     
     
     
-    func fetchProductListFromAPI(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError> {
+    func fetchProductListFromAPI(query: String, site: String, offset: Int, limit: Int) async -> Result<[ProductListItem], MercadoLibreRemoteDataSourceError> {
 
-        let urlString = "\(mercadiLibreURL)/products/search?status=active&site_id=MLC&q=\(query)&offset=\(offset)&limit=\(limit)"
+        let urlString = "\(mercadiLibreURL)/products/search?status=active&site_id=\(site)&q=\(query)&offset=\(offset)&limit=\(limit)"
         
         //codifica caracteres extraños
         guard let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
@@ -89,6 +89,7 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
             return .success(product)
             
         } catch let decodingError as DecodingError {
+            print("Error al decodificar:", decodingError)
             return .failure(.decoding(decodingError))
             
         } catch {

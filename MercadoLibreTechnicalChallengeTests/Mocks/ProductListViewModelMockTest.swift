@@ -11,8 +11,8 @@ import XCTest
 var mockListProduct: [ProductListItem] = []
 
 struct mockGetProductList: GetProductListUseCase {
-    
-    func getProductList(query: String, offset: Int, limit: Int) async -> Result<[MercadoLibreTechnicalChallenge.ProductListItem], MercadoLibreTechnicalChallenge.GetProductListError> {
+
+    func getProductList(query: String, site: String, offset: Int, limit: Int) async -> Result<[MercadoLibreTechnicalChallenge.ProductListItem], MercadoLibreTechnicalChallenge.GetProductListError> {
         
         var listProduct: [ProductListItem] = []
         let productItemList: ProductListItem = ProductListItem(

@@ -12,5 +12,5 @@ enum GetProductListError: Error {
 }
 
 protocol GetProductListUseCase {
-    func getProductList(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], GetProductListError>
+    func getProductList(query: String, site:String, offset: Int, limit: Int) async -> Result<[ProductListItem], GetProductListError>
 }

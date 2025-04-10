@@ -20,6 +20,7 @@ class ProductListViewModel {
     var errorMessage:String = ""
     var ShowErrorMessage: Bool = false
     var searchInputText: String = ""
+    var countryIndicator: String = "MCO"
     
     
     
