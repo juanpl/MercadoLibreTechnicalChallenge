@@ -14,22 +14,22 @@ class ProductListViewModel {
     
     
     private let getProductListUseCase: GetProductListUseCase
-    private var products: [ProductListItem]
+    var products: [ProductListItem]
     
-    private var pagingCounter: Int = 0
-    private var errorMessage:String = ""
-    private var ShowErrorMessage: Bool = false
-    private var searchInputText: String = ""
+    var pagingCounter: Int = 0
+    var errorMessage:String = ""
+    var ShowErrorMessage: Bool = false
+    var searchInputText: String = ""
     
     
     
-    init(products: [ProductListItem] = [], getProductListUseCase: GetProductListImp = GetProductListImp()) {
+    init(products: [ProductListItem] = [], getProductListUseCase: GetProductListUseCase = GetProductListImp()) {
         self.products = products
         self.getProductListUseCase = getProductListUseCase
     }
     
     func loadProductList(query: String, offset: Int, limit: Int) async {
-        let result = await getProductListUseCase.getProductList(query: searchInputText, offset: pagingCounter*5, limit: (pagingCounter*5)+5)
+        let result = await getProductListUseCase.getProductList(query: query, offset: pagingCounter*5, limit: (pagingCounter*5)+5)
         
         switch result {
         case .success(let list):
