@@ -55,7 +55,7 @@ final class ProductListViewModelMockTest: XCTestCase {
         let limit: Int = 1
         
         //When
-        await viewModel.loadProductList(query: query, offset: offset, limit: limit)
+        await viewModel.loadProductList(query: query)
         
         //Then
         XCTAssertEqual(viewModel.products.count, 0)
@@ -71,7 +71,7 @@ final class ProductListViewModelMockTest: XCTestCase {
         let limit: Int = 1
         
         //When
-        await viewModel.loadProductList(query: query, offset: offset, limit: limit)
+        await viewModel.loadProductList(query: query)
         
         //Then
         XCTAssertEqual(viewModel.products.count, 5)
@@ -87,8 +87,8 @@ final class ProductListViewModelMockTest: XCTestCase {
         let limit: Int = 1
         
         //When
-        await viewModel.loadProductList(query: query, offset: offset, limit: limit)
-        await viewModel.loadProductList(query: query, offset: offset, limit: limit)
+        await viewModel.loadProductList(query: query)
+        await viewModel.loadProductList(query: query)
         
         //Then
         XCTAssertEqual(viewModel.products.count, 15)

@@ -20,7 +20,7 @@ class ProductListViewModel {
     var errorMessage:String = ""
     var ShowErrorMessage: Bool = false
     var searchInputText: String = ""
-    var countryIndicator: String = "MCO"
+    var countrySite: String = "MCO"
     
     
     
@@ -29,15 +29,29 @@ class ProductListViewModel {
         self.getProductListUseCase = getProductListUseCase
     }
     
-    func loadProductList(query: String, offset: Int, limit: Int) async {
-        let result = await getProductListUseCase.getProductList(query: query, offset: pagingCounter*5, limit: (pagingCounter*5)+5)
+    func loadProductList(query: String) async {
+        let result = await getProductListUseCase.getProductList(query: query, site: countrySite , offset: (pagingCounter*5), limit: 5)
         
         switch result {
         case .success(let list):
             
-            //Va concatenando las respuestas a medida que se ejecuta la función
-            self.products += list
-            self.pagingCounter += 1
+            if list.isEmpty && pagingCounter == 0  {
+                errorMessage = "No hay ningun producto con ese nombre."
+                ShowErrorMessage = true
+                return
+            }
+            
+            if !list.isEmpty {
+                //Va concatenando las respuestas a medida que se ejecuta la función
+                self.products += list
+                self.pagingCounter += 1
+                return
+            }
+            
+            else {
+                return
+            }
+
             
             
         case .failure(let error):
