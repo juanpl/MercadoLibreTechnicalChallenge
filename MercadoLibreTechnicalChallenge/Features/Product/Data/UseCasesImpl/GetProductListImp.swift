@@ -16,8 +16,8 @@ class GetProductListImp: GetProductListUseCase {
     }
     
     
-    func getProductList(query: String, offset: Int, limit: Int) async -> Result<[ProductListItem], GetProductListError> {
-        let result = await mercadoLibreRemoteDataSource.fetchProductListFromAPI(query: query, offset: offset, limit: limit)
+    func getProductList(query: String,  site: String, offset: Int, limit: Int) async -> Result<[ProductListItem], GetProductListError> {
+        let result = await mercadoLibreRemoteDataSource.fetchProductListFromAPI(query: query, site: site, offset: offset, limit: limit)
 
         switch result {
         case .success(let products):

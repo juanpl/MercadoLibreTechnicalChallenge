@@ -34,7 +34,7 @@ struct ProductModel: Codable {
         self.mainFeatures = try container.decode([MainFeature].self, forKey: .mainFeatures)
         self.attributes = try container.decode([AttributeModel].self, forKey: .attributes)
         self.shortDescription = try container.decode(ShortDescription.self, forKey: .shortDescription)
-        self.buyBoxWinner = try container.decode(BuyBoxWinner.self, forKey: .buyBoxWinner)
+        self.buyBoxWinner = try container.decodeIfPresent(BuyBoxWinner.self, forKey: .buyBoxWinner)
     }
     
     func encode(to encoder: any Encoder) throws {
@@ -112,7 +112,7 @@ struct AttributeModel: Codable {
 
     enum CodingKeys: String, CodingKey {
         case name
-        case valueName
+        case valueName = "value_name"
     }
 
     init(from decoder: any Decoder) throws {
@@ -152,12 +152,20 @@ struct BuyBoxWinner: Codable {
     
     enum CodingKeys: String, CodingKey {
         case price
-        case currencyId
+        case currencyId = "currency_id"
     }
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.price = Double(try container.decode(Int.self, forKey: .price))
+        
+        if let doubleValue = try? container.decode(Double.self, forKey: .price) {
+            self.price = doubleValue
+        } else if let intValue = try? container.decode(Int.self, forKey: .price) {
+            self.price = Double(intValue)
+        } else {
+            throw DecodingError.typeMismatch(Double.self, .init(codingPath: [CodingKeys.price], debugDescription: "price no es Int ni Double"))
+        }
+        
         self.currencyId = try container.decode(String.self, forKey: .currencyId)
     }
     
