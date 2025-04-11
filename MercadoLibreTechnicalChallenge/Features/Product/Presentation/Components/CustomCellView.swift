@@ -35,6 +35,7 @@ struct CustomCellView: View {
         .cornerRadius(10)
         .shadow(radius: 2)
         .padding(.horizontal, 10)
+        
     }
 }
 

@@ -25,7 +25,7 @@ struct ProductSearchView: View {
     ]
     
     var body: some View {
-        ZStack{
+        ZStack {
             Color(red: 254/255, green: 208/255, blue: 18/255)
                 .ignoresSafeArea()
             VStack {
