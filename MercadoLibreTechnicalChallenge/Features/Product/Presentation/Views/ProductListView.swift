@@ -9,10 +9,18 @@ import SwiftUI
 
 struct ProductListView: View {
     
-    var viewModel: ProductListViewModel = .init()
+    private var viewModel: ProductListViewModel = .init()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(viewModel.products) { product in
+            CustomCellView(
+                imageUrl: product.name,
+                title: product.image
+            ).task {
+                await viewModel.loadProductList(query: "Iphone")
+            }
+            
+        }
     }
 }
 

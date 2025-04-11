@@ -51,9 +51,7 @@ final class ProductListViewModelMockTest: XCTestCase {
     func testErrorQuery() async {
         //Give
         let query = "iPhone 4"
-        let offset: Int = 0
-        let limit: Int = 1
-        
+
         //When
         await viewModel.loadProductList(query: query)
         
@@ -67,8 +65,6 @@ final class ProductListViewModelMockTest: XCTestCase {
     func testOneSuccesSearch() async {
         //Give
         let query: String = "iPhone 3G"
-        let offset: Int = 0
-        let limit: Int = 1
         
         //When
         await viewModel.loadProductList(query: query)
@@ -83,8 +79,6 @@ final class ProductListViewModelMockTest: XCTestCase {
     func testTwoSuccesSearch() async {
         //Give
         let query: String = "iPhone 3G"
-        let offset: Int = 0
-        let limit: Int = 1
         
         //When
         await viewModel.loadProductList(query: query)
