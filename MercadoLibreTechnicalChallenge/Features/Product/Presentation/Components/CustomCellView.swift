@@ -14,12 +14,28 @@ struct CustomCellView: View {
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
-                AsyncImage(url: URL(string: imageUrl)) { image in
-                    image
-                        .resizable()
-                        //.scaledToFit()
-                } placeholder: {
-                    Color.gray.opacity(0.3)
+                AsyncImage(url: URL(string: imageUrl)) { phase in
+                    switch phase {
+                    case .empty:
+                        ZStack {
+                            Color.gray.opacity(0.2)
+                            ProgressView() // Spinner de carga
+                        }
+
+                    case .success(let image):
+                        image
+                            .resizable()
+
+                    case .failure(_):
+                        ZStack {
+                            Color.red.opacity(0.1)
+                            Image(systemName: "photo")
+                                .foregroundColor(.gray)
+                        }
+
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
                 .frame(width: geometry.size.width * 0.3, height: geometry.size.height)
                 .clipped()

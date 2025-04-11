@@ -30,6 +30,12 @@ struct ProductListView: View {
                     .listRowSeparator(.hidden) // Oculta la línea separadora
                     .listRowInsets(EdgeInsets()) // Elimina márgenes internos de la celda
                     .background(Color.yellow) // Fondo del item (opcional)
+                    
+                    .onAppear {
+                        Task{
+                            await viewModel.loadProductList(query: "xbox")
+                        }
+                    }
                 }
                 .task {
                     await viewModel.loadProductList(query: "xbox")
