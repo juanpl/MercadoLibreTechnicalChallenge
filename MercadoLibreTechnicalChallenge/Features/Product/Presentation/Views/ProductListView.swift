@@ -14,12 +14,11 @@ struct ProductListView: View {
     var body: some View {
         List(viewModel.products) { product in
             CustomCellView(
-                imageUrl: product.name,
-                title: product.image
-            ).task {
-                await viewModel.loadProductList(query: "Iphone")
-            }
-            
+                imageUrl: product.image,
+                title: product.name
+            )
+        }.task {
+            await viewModel.loadProductList(query: "Iphone")
         }
     }
 }
