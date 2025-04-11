@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Observation
 
+@Observable
 class ProductInfoViewModel {
     
     private let getProductInfoUseCase: GetProductInfoUseCase

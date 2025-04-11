@@ -64,6 +64,7 @@ final class ProductListViewModelIntegrationTest: XCTestCase {
         XCTAssertNotEqual(sut.products.count, 0)
         XCTAssertEqual(sut.products.count, 10)
         XCTAssertEqual(sut.products, listReference)
+        XCTAssertEqual(sut.pagingCounter, 2)
     }
     
     func testNotFoundNameProduct() async{

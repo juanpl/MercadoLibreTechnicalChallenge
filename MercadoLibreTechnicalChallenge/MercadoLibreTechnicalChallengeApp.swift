@@ -11,7 +11,7 @@ import SwiftUI
 struct MercadoLibreTechnicalChallengeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProductSearchView()
         }
     }
 }
