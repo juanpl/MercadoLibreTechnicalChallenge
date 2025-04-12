@@ -45,6 +45,7 @@ struct CustomCellView: View {
                     .padding()
                     .frame(width: geometry.size.width * 0.7, height: geometry.size.height, alignment: .leading)
                     .background(Color.white)
+                    .foregroundColor(.black)
             }
         }
         .frame(height: 150)

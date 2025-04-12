@@ -8,37 +8,52 @@
 import SwiftUI
 
 struct ProductListView: View {
+    @EnvironmentObject var coordinator: NavigationCoordinator
+    
+    var countrySite: String
+    var searchText: String
     
     private var viewModel: ProductListViewModel = .init()
+    
+    init(countrySite: String, searchText: String) {
+        self.countrySite = countrySite
+        self.searchText = searchText
+    }
     
     var body: some View {
             VStack {
                 Spacer().frame(height:20)
                 HStack{
                     Text("Busqueda:")
-                    Text("XBOX")
+                    Text("\(searchText)")
                         .fontWeight(.bold)
                         .lineLimit(2)
                 }
                 .padding(.horizontal, 30)
                 List(viewModel.products) { product in
-                    CustomCellView(
-                        imageUrl: product.image,
-                        title: product.name
-                    )
-                    .padding(.vertical, 5) // 🟡 Espacio entre ítems
+                    Button {
+                        coordinator.push(.productInfo(productId: product.id))
+                    }label: {
+                        CustomCellView(
+                            imageUrl: product.image,
+                            title: product.name
+                        )
+
+                        
+                        .onAppear {
+                            Task{
+                                await viewModel.loadProductList(query: searchText,  countrySite: countrySite)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 5)
                     .listRowSeparator(.hidden) // Oculta la línea separadora
                     .listRowInsets(EdgeInsets()) // Elimina márgenes internos de la celda
                     .background(Color.yellow) // Fondo del item (opcional)
-                    
-                    .onAppear {
-                        Task{
-                            await viewModel.loadProductList(query: "xbox")
-                        }
-                    }
                 }
                 .task {
-                    await viewModel.loadProductList(query: "xbox")
+                    print("site: \(countrySite), query: \(searchText)")
+                    await viewModel.loadProductList(query: searchText,  countrySite: countrySite)
                 }
                 .scrollContentBackground(.hidden) // Oculta el fondo por defecto
                 .background(Color.yellow) // Tu color de fondo personalizado
@@ -51,5 +66,8 @@ struct ProductListView: View {
 }
 
 #Preview {
-    ProductListView()
+    ProductListView(
+        countrySite: "MCO",
+        searchText: "xbox"
+    ).environmentObject(NavigationCoordinator())
 }

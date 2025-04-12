@@ -51,9 +51,10 @@ final class ProductListViewModelMockTest: XCTestCase {
     func testErrorQuery() async {
         //Give
         let query = "iPhone 4"
+        let countrySite = "MCO"
 
         //When
-        await viewModel.loadProductList(query: query)
+        await viewModel.loadProductList(query: query, countrySite: countrySite)
         
         //Then
         XCTAssertEqual(viewModel.products.count, 0)
@@ -65,9 +66,9 @@ final class ProductListViewModelMockTest: XCTestCase {
     func testOneSuccesSearch() async {
         //Give
         let query: String = "iPhone 3G"
-        
+        let countrySite = "MCO"
         //When
-        await viewModel.loadProductList(query: query)
+        await viewModel.loadProductList(query: query, countrySite: countrySite)
         
         //Then
         XCTAssertEqual(viewModel.products.count, 5)
@@ -79,10 +80,11 @@ final class ProductListViewModelMockTest: XCTestCase {
     func testTwoSuccesSearch() async {
         //Give
         let query: String = "iPhone 3G"
+        let countrySite = "MCO"
         
         //When
-        await viewModel.loadProductList(query: query)
-        await viewModel.loadProductList(query: query)
+        await viewModel.loadProductList(query: query, countrySite: countrySite)
+        await viewModel.loadProductList(query: query, countrySite: countrySite)
         
         //Then
         XCTAssertEqual(viewModel.products.count, 15)

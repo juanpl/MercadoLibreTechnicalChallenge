@@ -9,7 +9,13 @@ import SwiftUI
 
 struct ProductInfoView: View {
     
+    
+    var productId: String
     private var viewModel: ProductInfoViewModel = .init()
+    
+    init(productId: String) {
+        self.productId = productId
+    }
     
     var body: some View {
         ScrollView {
@@ -35,6 +41,16 @@ struct ProductInfoView: View {
                     .indexViewStyle(.page(backgroundDisplayMode: .automatic))
                     .frame(height: 300)
                     .padding(.bottom, 20)
+                    if let price = viewModel.product?.price {
+                        Text("$\(price)")
+                            .font(.title)
+                            .padding(.bottom, 30)
+                    } else {
+                        Text("⚠️ Este producto no está disponible por el momento")
+                            .padding(.bottom, 30)
+                            .font(.title3)
+                            
+                    }
                     
                     Text("Lo que debes saber de este producto:")
                         .font(.title3)
@@ -92,8 +108,10 @@ struct ProductInfoView: View {
                 }
             }
             .padding(.horizontal,25)
+            .toolbarBackground(Color.yellow, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .task {
-                await viewModel.loadProductInfo(id: "MCO6007283")
+                await viewModel.loadProductInfo(id: productId)
             }
         }
     
@@ -103,5 +121,5 @@ struct ProductInfoView: View {
 
 
 #Preview {
-    ProductInfoView()
+    ProductInfoView(productId: "MCO30400479")
 }
