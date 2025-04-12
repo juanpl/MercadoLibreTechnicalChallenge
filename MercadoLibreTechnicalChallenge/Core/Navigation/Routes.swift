@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+
+enum Routes: Hashable {
+    case productList(searchText: String, countrySite: String)
+    case productInfo(productId: String)
+}

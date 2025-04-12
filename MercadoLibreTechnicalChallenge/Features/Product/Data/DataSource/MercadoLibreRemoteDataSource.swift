@@ -27,8 +27,8 @@ class MercadoLibreRemoteDataSource: MercadoLibreRemoteDataSourceProtocol {
     private let session: URLSession
     
     init(
-         mercadiLibreURL: String = "https://api.mercadolibre.com",
-         accesToken: String = "APP_USR-8880650627470842-041108-23da7b8d444e35526023f9d68c9198a1-556123717",
+        mercadiLibreURL: String = "\(ConstantsValues.API.baseURL)",
+        accesToken: String = "\(ConstantsValues.Security.tokenKey)",
          session: URLSession = .shared
     ) {
         self.mercadiLibreURL = mercadiLibreURL

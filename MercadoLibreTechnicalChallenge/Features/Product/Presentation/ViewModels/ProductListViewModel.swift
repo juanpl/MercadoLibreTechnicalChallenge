@@ -19,25 +19,21 @@ class ProductListViewModel {
     var pagingCounter: Int = 0
     var errorMessage:String = ""
     var ShowErrorMessage: Bool = false
-    var searchInputText: String = ""
     var moreProductsAreLoading: Bool = false
-    var countrySite: String = "MCO"
-    
-    
     
     init(products: [ProductListItem] = [], getProductListUseCase: GetProductListUseCase = GetProductListImp()) {
         self.products = products
         self.getProductListUseCase = getProductListUseCase
     }
     
-    func loadProductList(query: String) async {
+    func loadProductList(query: String, countrySite: String) async {
         
         guard !moreProductsAreLoading else { return } // ← no hagas nada si ya está cargando
         moreProductsAreLoading = true
 
         defer { moreProductsAreLoading = false }
         
-        let result = await getProductListUseCase.getProductList(query: query, site: countrySite , offset: (pagingCounter*10), limit: 10)
+        let result = await getProductListUseCase.getProductList(query: query, site: countrySite , offset: (pagingCounter*5), limit: 5)
         
         switch result {
         case .success(let list):

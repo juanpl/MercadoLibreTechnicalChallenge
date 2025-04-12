@@ -31,8 +31,8 @@ struct ProductModel: Codable {
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
         self.pictures = try container.decode([Picture].self, forKey: .pictures)
-        self.mainFeatures = try container.decode([MainFeature].self, forKey: .mainFeatures)
-        self.attributes = try container.decode([AttributeModel].self, forKey: .attributes)
+        self.mainFeatures = try container.decodeIfPresent([MainFeature].self, forKey: .mainFeatures) ?? []
+        self.attributes = try container.decodeIfPresent([AttributeModel].self, forKey: .attributes) ?? []
         self.shortDescription = try container.decode(ShortDescription.self, forKey: .shortDescription)
         self.buyBoxWinner = try container.decodeIfPresent(BuyBoxWinner.self, forKey: .buyBoxWinner)
     }

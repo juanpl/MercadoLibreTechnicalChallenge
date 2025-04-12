@@ -23,9 +23,10 @@ final class ProductListViewModelIntegrationTest: XCTestCase {
     func testGetListSucces() async throws {
         //Give
         let query = "iphone"
+        let countrySite = "MCO"
         
         //When
-        await sut.loadProductList(query: query)
+        await sut.loadProductList(query: query, countrySite: countrySite)
         let listReference: [ProductListItem] = [
             ProductListItem(id: "MCO30400479", name: " iPhone 3G", image: "https://http2.mlstatic.com/D_NQ_NP_796973-MLA28284457453_102018-F.jpg"),
             ProductListItem(id: "MCO6345170", name: "Apple Iphone se iPhone SE - Plata - 32 GB - 2 GB", image: "https://http2.mlstatic.com/D_NQ_NP_726769-MLU75333762318_032024-F.jpg"),
@@ -43,10 +44,10 @@ final class ProductListViewModelIntegrationTest: XCTestCase {
     func testGetListTwoTimesSucces() async throws {
         //Give
         let query = "iphone"
-        
+        let countrySite = "MCO"
         //When
-        await sut.loadProductList(query: query)
-        await sut.loadProductList(query: query)
+        await sut.loadProductList(query: query, countrySite: countrySite)
+        await sut.loadProductList(query: query, countrySite: countrySite)
         let listReference: [ProductListItem] = [
             ProductListItem(id: "MCO30400479", name: " iPhone 3G", image: "https://http2.mlstatic.com/D_NQ_NP_796973-MLA28284457453_102018-F.jpg"),
             ProductListItem(id: "MCO6345170", name: "Apple Iphone se iPhone SE - Plata - 32 GB - 2 GB", image: "https://http2.mlstatic.com/D_NQ_NP_726769-MLU75333762318_032024-F.jpg"),
@@ -69,10 +70,12 @@ final class ProductListViewModelIntegrationTest: XCTestCase {
     
     func testNotFoundNameProduct() async{
         //Give
+        
         let query = "sdasdasdasdasd"
+        let countrySite = "MCO"
         
         //When
-        await sut.loadProductList(query: query)
+        await sut.loadProductList(query: query, countrySite: countrySite)
         
         //Then
         XCTAssertEqual(sut.products.count, 0)

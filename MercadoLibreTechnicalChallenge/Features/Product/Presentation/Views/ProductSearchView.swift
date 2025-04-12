@@ -10,6 +10,7 @@ import SwiftUI
 
 
 struct ProductSearchView: View {
+    @EnvironmentObject var coordinator: NavigationCoordinator
     
     @State private var searchText: String = ""
     @State private var chosenCountry = "🇨🇴 Colombia"
@@ -63,7 +64,11 @@ struct ProductSearchView: View {
                     .padding()
                 
                 Button(action: {
-                    print("Botón presionado")
+                    if !searchText.isEmpty {
+                        print("El producto buscado es: \(searchText)")
+                        print("El pais es: \(countries[chosenCountry]!)")
+                        coordinator.push(.productList(searchText: searchText, countrySite: countries[chosenCountry]!))
+                    }
                 }) {
                     Text("Buscar")
                         .font(.headline)
@@ -85,4 +90,5 @@ struct ProductSearchView: View {
 
 #Preview {
     ProductSearchView()
+        .environmentObject(NavigationCoordinator()) 
 }
