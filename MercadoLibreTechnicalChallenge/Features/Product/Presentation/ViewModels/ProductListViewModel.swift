@@ -39,7 +39,7 @@ class ProductListViewModel {
         case .success(let list):
             await MainActor.run {
                 if list.isEmpty && pagingCounter == 0  {
-                    errorMessage = "No hay ningun producto con ese nombre."
+                    errorMessage = "No hay ningun producto con el nombre: \(query)."
                     ShowErrorMessage = true
                     return
                 }
