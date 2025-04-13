@@ -21,15 +21,18 @@ struct ProductListView: View {
     }
     
     var body: some View {
-            VStack {
-                Spacer().frame(height:20)
-                HStack{
-                    Text("Busqueda:")
-                    Text("\(searchText)")
-                        .fontWeight(.bold)
-                        .lineLimit(2)
-                }
-                .padding(.horizontal, 30)
+        VStack {
+            Spacer().frame(height:20)
+            HStack{
+                Text("Busqueda:")
+                Text("\(searchText)")
+                    .fontWeight(.bold)
+                    .lineLimit(2)
+            }
+            .padding(.horizontal, 30)
+            if(viewModel.ShowErrorMessage) {
+                CustomErrorMessageWindow(errorMessage: viewModel.errorMessage)
+            } else{
                 List(viewModel.products) { product in
                     Button {
                         coordinator.push(.productInfo(productId: product.id))
@@ -46,7 +49,7 @@ struct ProductListView: View {
                             }
                         }
                     }
-                    .padding(.vertical, 5)
+                    .padding(.vertical, 8)
                     .listRowSeparator(.hidden) // Oculta la línea separadora
                     .listRowInsets(EdgeInsets()) // Elimina márgenes internos de la celda
                     .background(Color.yellow) // Fondo del item (opcional)
@@ -56,12 +59,11 @@ struct ProductListView: View {
                     await viewModel.loadProductList(query: searchText,  countrySite: countrySite)
                 }
                 .scrollContentBackground(.hidden) // Oculta el fondo por defecto
-                .background(Color.yellow) // Tu color de fondo personalizado
+                .background(Color.yellow)
             }
-            .background(Color.yellow)
-            
-        
-
+// Tu color de fondo personalizado
+        }
+        .background(Color.yellow)
     }
 }
 

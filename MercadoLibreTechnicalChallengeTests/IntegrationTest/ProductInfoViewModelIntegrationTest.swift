@@ -131,7 +131,7 @@ final class ProductInfoViewModelIntegrationTest: XCTestCase {
                 "https://http2.mlstatic.com/D_NQ_NP_768824-MLU71087299169_082023-F.jpg",
                 "https://http2.mlstatic.com/D_NQ_NP_624851-MLU71087299175_082023-F.jpg"
             ],
-            price: 18593)
+            price: 15400)
         
         XCTAssertNotNil(sut.product)
         XCTAssertEqual(sut.showErrorMessage, false)
