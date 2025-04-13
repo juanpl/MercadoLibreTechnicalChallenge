@@ -42,7 +42,7 @@ struct ProductInfoView: View {
                             }
                         }
                         .tabViewStyle(.page)
-                        .indexViewStyle(.page(backgroundDisplayMode: .automatic))
+                        .indexViewStyle(.page(backgroundDisplayMode: .always))
                         .frame(height: 300)
                         .padding(.bottom, 20)
                         if let price = viewModel.product?.price {

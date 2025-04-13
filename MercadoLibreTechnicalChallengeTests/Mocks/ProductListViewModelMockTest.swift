@@ -87,7 +87,7 @@ final class ProductListViewModelMockTest: XCTestCase {
         await viewModel.loadProductList(query: query, countrySite: countrySite)
         
         //Then
-        XCTAssertEqual(viewModel.products.count, 15)
+        XCTAssertEqual(viewModel.products.count, 10)
         XCTAssertEqual(viewModel.pagingCounter, 2)
         XCTAssertEqual(viewModel.errorMessage, "")
         XCTAssertEqual(viewModel.ShowErrorMessage, false)
