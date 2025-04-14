@@ -5,7 +5,6 @@ class ProductListViewModel: ObservableObject {
     
     private let getProductListUseCase: GetProductListUseCase
 
-    // Propiedades observables con @Published
     @Published var products: [ProductListItem]
     @Published var pagingCounter: Int = 0
     @Published var errorMessage: String = ""
@@ -19,35 +18,36 @@ class ProductListViewModel: ObservableObject {
     }
 
     func loadProductList(query: String, countrySite: String) async {
-        
-        guard !moreProductsAreLoading else { return }
 
-        defer { moreProductsAreLoading = false }
-        
-        let result = await getProductListUseCase.getProductList(query: query, site: countrySite , offset: (pagingCounter*5), limit: 5)
-        
-        switch result {
-        case .success(let list):
-            await MainActor.run {
-                if list.isEmpty && pagingCounter == 0  {
+        await MainActor.run {
+            if moreProductsAreLoading { return }
+            moreProductsAreLoading = true
+        }
+
+        let result = await getProductListUseCase.getProductList(query: query,site: countrySite,offset: pagingCounter * 5,limit: 5)
+
+        await MainActor.run {
+            defer { moreProductsAreLoading = false }
+
+            switch result {
+            case .success(let list):
+                if list.isEmpty && pagingCounter == 0 {
                     errorMessage = "No hay ningún producto con el nombre: \(query)."
                     showErrorMessage = true
-                    return
-                }
-                
-                if !list.isEmpty {
-                    //Va concatenando las respuestas a medida que se ejecuta la función
-                    self.products += list
+                } else if !list.isEmpty {
+                    // Elimina duplicados antes de agregar
+                    let nuevos = list.filter { nuevo in
+                        !self.products.contains(where: { $0.id == nuevo.id })
+                    }
+                    self.products += nuevos
                     self.pagingCounter += 1
-                    return
                 }
+
+            case .failure(let error):
+                print("Error al obtener lista productos: \(error)")
+                errorMessage = "Error cargando los productos"
+                showErrorMessage = true
             }
-            
-            
-        case .failure(let error):
-            print("Error al obtener lista productos: \(error)")
-            errorMessage = "Error cargando los productos"
-            showErrorMessage = true
         }
     }
 }
