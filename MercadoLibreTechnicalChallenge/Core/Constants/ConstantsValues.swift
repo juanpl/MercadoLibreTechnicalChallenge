@@ -14,7 +14,7 @@ enum ConstantsValues {
     }
     
     enum Security {
-        static let tokenKey = "APP_USR-8880650627470842-041319-7d4eb30afa4a0897c189cac62c86ca22-556123717"
+        static let tokenKey = "APP_USR-8880650627470842-041407-2a4bc51946ebef6c12331becb0d8540c-556123717"
     }
     
 }

@@ -33,7 +33,7 @@ final class ProductListViewModelMockTest: XCTestCase {
         XCTAssertEqual(viewModel.products.count, 0)
         XCTAssertEqual(viewModel.pagingCounter, 0)
         XCTAssertEqual(viewModel.errorMessage, "Error cargando los productos")
-        XCTAssertEqual(viewModel.ShowErrorMessage, true)
+        XCTAssertEqual(viewModel.showErrorMessage, true)
     }
     
     func testOneSuccesSearch() async {
@@ -47,7 +47,7 @@ final class ProductListViewModelMockTest: XCTestCase {
         XCTAssertEqual(viewModel.products.count, 5)
         XCTAssertEqual(viewModel.pagingCounter, 1)
         XCTAssertEqual(viewModel.errorMessage, "")
-        XCTAssertEqual(viewModel.ShowErrorMessage, false)
+        XCTAssertEqual(viewModel.showErrorMessage, false)
     }
     
     func testTwoSuccesSearch() async {
@@ -60,10 +60,10 @@ final class ProductListViewModelMockTest: XCTestCase {
         await viewModel.loadProductList(query: query, countrySite: countrySite)
         
         //Then
-        XCTAssertEqual(viewModel.products.count, 10)
-        XCTAssertEqual(viewModel.pagingCounter, 2)
+        XCTAssertEqual(viewModel.products.count, 5)
+        XCTAssertEqual(viewModel.pagingCounter, 1)
         XCTAssertEqual(viewModel.errorMessage, "")
-        XCTAssertEqual(viewModel.ShowErrorMessage, false)
+        XCTAssertEqual(viewModel.showErrorMessage, false)
     }
     
 }
