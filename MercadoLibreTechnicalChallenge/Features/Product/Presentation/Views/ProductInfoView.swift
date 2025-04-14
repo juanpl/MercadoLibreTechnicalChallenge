@@ -11,7 +11,7 @@ struct ProductInfoView: View {
     
     
     var productId: String
-    private var viewModel: ProductInfoViewModel = .init()
+    @StateObject private var viewModel: ProductInfoViewModel = .init()
     
     init(productId: String) {
         self.productId = productId

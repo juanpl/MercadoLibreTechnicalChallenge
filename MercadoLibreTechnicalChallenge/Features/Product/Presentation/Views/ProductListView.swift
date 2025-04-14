@@ -13,7 +13,7 @@ struct ProductListView: View {
     var countrySite: String
     var searchText: String
     
-    private var viewModel: ProductListViewModel = .init()
+    @StateObject private var viewModel: ProductListViewModel = .init()
     
     init(countrySite: String, searchText: String) {
         self.countrySite = countrySite
@@ -30,7 +30,7 @@ struct ProductListView: View {
                     .lineLimit(2)
             }
             .padding(.horizontal, 30)
-            if(viewModel.ShowErrorMessage) {
+            if(viewModel.showErrorMessage) {
                 CustomErrorMessageWindow(errorMessage: viewModel.errorMessage)
             } else{
                 List(viewModel.products) { product in
@@ -44,15 +44,17 @@ struct ProductListView: View {
 
                         
                         .onAppear {
-                            Task{
-                                await viewModel.loadProductList(query: searchText,  countrySite: countrySite)
+                            if product.id == viewModel.products.last?.id {
+                                Task {
+                                    await viewModel.loadProductList(query: searchText, countrySite: countrySite)
+                                }
                             }
                         }
                     }
                     .padding(.vertical, 8)
-                    .listRowSeparator(.hidden) // Oculta la línea separadora
-                    .listRowInsets(EdgeInsets()) // Elimina márgenes internos de la celda
-                    .background(Color.yellow) // Fondo del item (opcional)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+                    .background(Color.yellow)
                 }
                 .task {
                     print("site: \(countrySite), query: \(searchText)")

@@ -6,16 +6,16 @@
 //
 
 import Foundation
-import Observation
+import Combine
 
-@Observable
-class ProductInfoViewModel {
+
+class ProductInfoViewModel: ObservableObject {
     
     private let getProductInfoUseCase: GetProductInfoUseCase
     
-    var product: Product?
-    var showErrorMessage: Bool = false
-    var errorMessage: String = ""
+    @Published var product: Product?
+    @Published var showErrorMessage: Bool = false
+    @Published var errorMessage: String = ""
     
     
     init(getProductInfoUseCase: GetProductInfoUseCase = GetProductInfoImp(),
@@ -27,13 +27,15 @@ class ProductInfoViewModel {
     func loadProductInfo(id: String) async {
         let result = await getProductInfoUseCase.getProductInfo(id: id)
         
-        switch result {
-        case .success(let product):
-            self.product = product
-        case .failure(let error):
-            print("Error al obtener productos: \(error)")
-            showErrorMessage = true
-            errorMessage = "Error cargando el producto"
+        await MainActor.run {
+            switch result {
+            case .success(let product):
+                self.product = product
+            case .failure(let error):
+                print("Error al obtener productos: \(error)")
+                showErrorMessage = true
+                errorMessage = "Error cargando el producto"
+            }
         }
     }
     

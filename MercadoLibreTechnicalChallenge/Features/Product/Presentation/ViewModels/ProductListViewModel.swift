@@ -1,35 +1,26 @@
-//
-//  ProductViewModel.swift
-//  MercadoLibreTechnicalChallenge
-//
-//  Created by Juan Pablo Lasprilla Correa on 8/04/25.
-//
-
 import Foundation
-import Observation
+import Combine
 
-@Observable
-class ProductListViewModel {
-    
-    
+class ProductListViewModel: ObservableObject {
     
     private let getProductListUseCase: GetProductListUseCase
-    var products: [ProductListItem]
-    
-    var pagingCounter: Int = 0
-    var errorMessage:String = ""
-    var ShowErrorMessage: Bool = false
-    var moreProductsAreLoading: Bool = false
-    
-    init(products: [ProductListItem] = [], getProductListUseCase: GetProductListUseCase = GetProductListImp()) {
+
+    // Propiedades observables con @Published
+    @Published var products: [ProductListItem]
+    @Published var pagingCounter: Int = 0
+    @Published var errorMessage: String = ""
+    @Published var showErrorMessage: Bool = false
+    @Published var moreProductsAreLoading: Bool = false
+
+    init(products: [ProductListItem] = [],
+         getProductListUseCase: GetProductListUseCase = GetProductListImp()) {
         self.products = products
         self.getProductListUseCase = getProductListUseCase
     }
-    
+
     func loadProductList(query: String, countrySite: String) async {
         
-        guard !moreProductsAreLoading else { return } // ← no hagas nada si ya está cargando
-        moreProductsAreLoading = true
+        guard !moreProductsAreLoading else { return }
 
         defer { moreProductsAreLoading = false }
         
@@ -39,8 +30,8 @@ class ProductListViewModel {
         case .success(let list):
             await MainActor.run {
                 if list.isEmpty && pagingCounter == 0  {
-                    errorMessage = "No hay ningun producto con el nombre: \(query)."
-                    ShowErrorMessage = true
+                    errorMessage = "No hay ningún producto con el nombre: \(query)."
+                    showErrorMessage = true
                     return
                 }
                 
@@ -56,10 +47,7 @@ class ProductListViewModel {
         case .failure(let error):
             print("Error al obtener lista productos: \(error)")
             errorMessage = "Error cargando los productos"
-            ShowErrorMessage = true
+            showErrorMessage = true
         }
-        
     }
-    
-    
 }
