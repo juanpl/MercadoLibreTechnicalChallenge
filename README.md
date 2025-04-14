@@ -5,7 +5,7 @@ Aplicación de ejemplo desarrollada en SwiftUI que consume la API de Mercado Lib
 ## Características
 
 - Búsqueda de productos por palabra clave.
-- Listado de resultados con imágenes y precios.
+- Listado de resultados con imágenes.
 - Vista detallada del producto con galería de imágenes, atributos técnicos y más.
 - Arquitectura basada en Clean Architecture.
 - Separación de capas en `Domain`, `Data` y `Presentation`.
