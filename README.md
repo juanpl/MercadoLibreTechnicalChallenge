@@ -7,7 +7,7 @@ Aplicación de ejemplo desarrollada en SwiftUI que consume la API de Mercado Lib
 - Búsqueda de productos por palabra clave.
 - Listado de resultados con imágenes.
 - Vista detallada del producto con galería de imágenes, atributos técnicos y más.
-- Arquitectura basada en Clean Architecture.
+- Arquitectura basada en el patrón MVVM, estructurada bajo principios de Clean Architecture.
 - Separación de capas en `Domain`, `Data` y `Presentation`.
 - Consumo de APIs RESTful con `async/await`.
 
